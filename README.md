@@ -17,8 +17,7 @@
 
 ##### Установка
  ```
-git clone http://git.tocan.com.ua:10001/Saylermb/addresstempleter.git
-pip install .
+pip install address-templeter
  ```
  
 ##### Формирования дата сета и обучение
