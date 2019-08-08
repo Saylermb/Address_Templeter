@@ -38,6 +38,9 @@ if __name__ == '__main__':
     s = clean("город Калиниград, Садово Красная ул., 8а", house=True, index=True)
     print(s)
     assert s == 'Калиниград Садово Красная 8а'
+    s = clean("г Киев                         Н. Амосова               12 Б", house=True, index=True)
+    print(s)
+    assert s == 'Киев Н Амосова 12Б'
     s = parse("город Калиниград, 50-лет ссср ул. 8а")
     print(s)
     s = clean("город Калиниград Садово-Красная ул. 184 - Б", house=True, index=True)

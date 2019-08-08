@@ -6,7 +6,7 @@ from address_templeter import STREET_PRETEXT, PUNCTUATION_MARK, \
 
 api = overpy.Overpass()
 
-geo_polygon = "(50.462287,30.509273,50.540674,30.524974)"
+geo_polygon = "(50.472287,30.508273,50.539674,30.525974)"
 response = api.query(f"""way["addr:street"]["addr:housenumber"]{geo_polygon};
     (._;>;);
     out body;""")
