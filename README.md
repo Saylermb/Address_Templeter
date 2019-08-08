@@ -34,6 +34,7 @@ pip install address-templeter
 - Выполнить следующие команды для создания файла модели:
 ```shell script
 cd  /path/to/Address_Templeter
+pip install parserator
 parserator train /training/dataset.xml address_templeter
 #  По окончание обучения получится файл можели learned_settings.crfsuite
 ```

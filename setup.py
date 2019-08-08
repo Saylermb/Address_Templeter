@@ -7,9 +7,9 @@ except ImportError:
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 setup(
-    version='1.10',
-    url='',
-    description='',
+    version='1.11',
+    url='https://github.com/Saylermb/Address_Templeter',
+    description='search for addresses in the text',
     name='address_templeter',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -19,7 +19,6 @@ setup(
     install_requires=['python-crfsuite>=0.9.6',
                       'lxml'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
