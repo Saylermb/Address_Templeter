@@ -23,25 +23,28 @@ OTHER_LABELS = ["OtherNumber",  # 312311
 PRETEXT = ["PlacePretext",  # г.
            "RegionPretext",  # Область
            "StreetPretext",  # улица
-           "HousePretext",  # буд
            ]
+
+HOUSE_NAME = ["HouseName",  # дом культуры
+              "HousePretext",  # буд
+              ]
 
 LABELS = ["Place",  # Киев
           "Region",  # Киевская
           "Street",  # Амосова
           "HouseNumber",  # 55
-          "HouseName",  # дом культуры
+
           "PostCode",  # 04122
           "Dash",  # -
           ]  # The labels should be a list of strings
 
-LABELS = LABELS + OTHER_LABELS + PRETEXT
+LABELS = LABELS + OTHER_LABELS + PRETEXT + HOUSE_NAME
 
 STREET_PRETEXT = ["вул", "вулиця", "ул", "улица",
                   "проспект", "проспект", "просп",
                   "пр-т", "шоссе", "шосе", "б-р", "пл",
                   "площа", "бульвар", "бул", "пров", "автошлях",
-                  "узвіз",
+                  "узвіз", "пр-т", "б-р"
                   ]
 PLACE_PRETEXT = ["м", "город", "місто", "село",
                  "смт", "пгт", "г", "п"]
@@ -263,7 +266,7 @@ def digits(token: str) -> str:
         return "no_digit"
 
 
-def clean(address: str, prefix=True) -> str:
+def clean(address: str, prefix=False, name_building=False) -> str:
     """removes whitespace characters, pinching tricks and unnecessary tokens"""
 
     def concat_address_number(address_array):
@@ -284,7 +287,8 @@ def clean(address: str, prefix=True) -> str:
     address = re.sub(r'\s?\-\s?', '-', address)
     address = re.sub(r'\s?[\\/]\s?', '/', address)
     parsed = parse(address)
-    label = OTHER_LABELS if not prefix else OTHER_LABELS + PRETEXT
+    label = OTHER_LABELS if prefix else OTHER_LABELS + PRETEXT
+    label = label if name_building else label + HOUSE_NAME
     parsed = concat_address_number(parsed)
     address_string = " ".join([p[0] for p in parsed if p[1] not in label])
     return address_string

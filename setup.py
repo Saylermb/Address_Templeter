@@ -6,7 +6,7 @@ except ImportError:
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 setup(
-    version='1.04',
+    version='1.05',
     url='',
     description='',
     name='address_templeter',
