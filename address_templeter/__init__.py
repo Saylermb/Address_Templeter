@@ -32,8 +32,8 @@ PRETEXT = ["PlacePretext",  # г.
 HOUSE_NAME = ["HouseName",  # дом культуры
               "HousePretext",  # буд
               ]
-HOUSE_NUMBER = [ "HouseNumber"  # 55
-               ]
+HOUSE_NUMBER = ["HouseNumber"  # 55
+                ]
 LABELS = ["Place",  # Киев
           "Region",  # Киевская
           "Street",  # Амосова
@@ -198,10 +198,26 @@ def tokenFeatures(token):
                             else False),
         'ends_with_sign': (token[-1]
                            if bool(re.match('.+[^.\w]', token, flags=re.UNICODE))
-                           else False)
+                           else False),
+        'with_dash': dash_id(token)
     }
 
     return features
+
+
+def dash_id(token):
+    if token.find('-') == -1:
+        return 'none dash'
+    elif re.fullmatch(r'\D+-\D+', token):
+        return 'word-word'
+    elif re.fullmatch(r'\d+-\D+', token):
+        return 'digit-word'
+    elif re.fullmatch(r'\D+-\d+', token):
+        return 'word-digit'
+    elif re.fullmatch(r'\d+-\d+', token):
+        return 'digit-digit'
+    else:
+        return 'other'
 
 
 def casing(token):
