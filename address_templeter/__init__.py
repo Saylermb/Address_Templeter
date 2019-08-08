@@ -228,6 +228,7 @@ def in_pre(token):
     :param token:
     :return: LABELS name
     """
+    token = token.lower()
     if token in STREET_PRETEXT:
         return "StreetPretext"
     elif token in PLACE_PRETEXT:
