@@ -20,6 +20,10 @@ OTHER_LABELS = ["OtherNumber",  # 312311
                 "Comma"
                 ]
 
+INDEX = ["PostCode",  # 04122
+         "PostCode_"  # moving PostCode
+         ]
+
 PRETEXT = ["PlacePretext",  # г.
            "RegionPretext",  # Область
            "StreetPretext",  # улица
@@ -28,17 +32,15 @@ PRETEXT = ["PlacePretext",  # г.
 HOUSE_NAME = ["HouseName",  # дом культуры
               "HousePretext",  # буд
               ]
-
+HOUSE_NUMBER = [ "HouseNumber"  # 55
+               ]
 LABELS = ["Place",  # Киев
           "Region",  # Киевская
           "Street",  # Амосова
-          "HouseNumber",  # 55
-
-          "PostCode",  # 04122
           "Dash",  # -
           ]  # The labels should be a list of strings
 
-LABELS = LABELS + OTHER_LABELS + PRETEXT + HOUSE_NAME
+LABELS = LABELS + OTHER_LABELS + PRETEXT + HOUSE_NAME + INDEX
 
 STREET_PRETEXT = ["вул", "вулиця", "ул", "улица",
                   "проспект", "проспект", "просп",
@@ -266,7 +268,7 @@ def digits(token: str) -> str:
         return "no_digit"
 
 
-def clean(address: str, prefix=False, name_building=False) -> str:
+def clean(address: str, prefix: bool = False, house: bool = False, index: bool = False) -> str:
     """removes whitespace characters, pinching tricks and unnecessary tokens"""
 
     def concat_address_number(address_array):
@@ -284,11 +286,18 @@ def clean(address: str, prefix=False, name_building=False) -> str:
                 break
         return address_array
 
+    def get_unnecessary_label():
+        label_ = OTHER_LABELS if prefix else OTHER_LABELS + PRETEXT
+        label_ = label_ if index else label_ + INDEX
+        if not house:
+            label_ = label_ + HOUSE_NAME if not any(p for p in parsed if p[1] == 'HouseNumber') \
+                else label_ + HOUSE_NUMBER
+        return label_
+
     address = re.sub(r'\s?\-\s?', '-', address)
     address = re.sub(r'\s?[\\/]\s?', '/', address)
     parsed = parse(address)
-    label = OTHER_LABELS if prefix else OTHER_LABELS + PRETEXT
-    label = label if name_building else label + HOUSE_NAME
     parsed = concat_address_number(parsed)
-    address_string = " ".join([p[0] for p in parsed if p[1] not in label])
+    non_label = get_unnecessary_label()
+    address_string = " ".join([p[0] for p in parsed if p[1] not in non_label])
     return address_string
