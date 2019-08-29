@@ -8,7 +8,8 @@ if __name__ == '__main__':
     s = clean('м. Київ, вул. В. Гетьмана, 10/37 (на розі вул. В. Гетьмана та вул. Виборзької - на другому поверсі', house=True, index=True)
     print(s)
     assert s == 'Київ В Гетьмана 10/37'
-    s = clean("Ясниноватский р-н, Донецкая область, улица Садовая, 26а, магазин Ашан", house=True, index=True)
+    s = clean("Ясниноватский р-н, Донецкая область, улица Садовая, 26а, магазин Ашан", house=True, index=True, )
+    print(parse("Ясниноватский р-н, Донецкая область, улица Садовая, 26а, магазин Ашан"))
     print(s)
     assert s == 'Ясниноватский Донецкая Садовая 26а'
     s = clean("г. Авдеевка, Ясиноватского района, Донецкой обл, Садовая 26-а 10234", house=True, index=True)  # индекс
@@ -32,15 +33,15 @@ if __name__ == '__main__':
     assert s == 'донецк куйбышева 26а'
     s = parse("Ясень, ясень, как так ясень?!")  # просто хрень)
     print(s)
-    s = clean("г.Киев", prefix=True)  # отсутствие пробелов
+    s = clean("г.Киев", place_pretext=True)  # отсутствие пробелов
     print(s)
     assert s == 'г Киев'
-    s = clean("город Калиниград, Садово Красная ул., 8а", house=True, index=True)
+    s = clean("город Калиниград, Садово Красная ул., 8а", house=True, index=True, address_pretext=True)
     print(s)
-    assert s == 'Калиниград Садово Красная 8а'
-    s = clean("г Киев                         Н. Амосова               12 Б", house=True, index=True)
+    assert s == 'Калиниград Садово Красная улица 8а'
+    s = clean("г Киев,    Киевская обл.                     Н. Амосова               12 Б", house=True, index=True, region_pretext=True)
     print(s)
-    assert s == 'Киев Н Амосова 12Б'
+    assert s == 'Киев Киевская область Н Амосова 12Б'
     s = parse("город Калиниград, 50-лет ссср ул. 8а")
     print(s)
     s = clean("город Калиниград Садово-Красная ул. 184 - Б", house=True, index=True)
@@ -49,3 +50,5 @@ if __name__ == '__main__':
     s = parse("г. Судак Солнечная 9 а")
     print(s)
     print(time() - t1)
+
+

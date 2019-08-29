@@ -12,7 +12,8 @@ response = api.query(f"""way["addr:street"]["addr:housenumber"]{geo_polygon};
     out body;""")
 
 iter_address = [way.tags for way in response.ways]
-
+REGION_PRETEXT = list(REGION_PRETEXT.keys())
+STREET_PRETEXT = list(STREET_PRETEXT.keys())
 
 def addr_housenumber(housenumber):
     def mark_house(part_house):

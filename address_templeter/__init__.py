@@ -24,11 +24,14 @@ INDEX = ["PostCode",  # 04122
          "PostCode_"  # moving PostCode
          ]
 
-PRETEXT = ["PlacePretext",  # г.
-           "RegionPretext",  # Область
-           "StreetPretext",  # улица
-           ]
-
+PLACE = ["PlacePretext",  # г.
+                 ]
+REGION = [
+    "RegionPretext",  # Область
+]
+STREET = [
+    "StreetPretext"  # ул, бульвар
+]
 HOUSE_NAME = ["HouseName",  # дом культуры
               "HousePretext",  # буд
               ]
@@ -40,19 +43,19 @@ LABELS = ["Place",  # Киев
           "Dash",  # -
           ]  # The labels should be a list of strings
 
-LABELS = LABELS + OTHER_LABELS + PRETEXT + HOUSE_NAME + INDEX
+LABELS = LABELS + OTHER_LABELS + PLACE + REGION + STREET + HOUSE_NAME + INDEX + HOUSE_NUMBER
 
-STREET_PRETEXT = ["вул", "вулиця", "ул", "улица",
-                  "проспект", "проспект", "просп",
-                  "пр-т", "шоссе", "шосе", "б-р", "пл",
-                  "площа", "бульвар", "бул", "пров", "автошлях",
-                  "узвіз", "пр-т", "б-р", "провулок"
-                  ]
+STREET_PRETEXT = {"вул": "вулиця", "вулиця": "вулиця", "ул": "улица", "улица": "улица",
+                  "проспект": "проспект", "просп": "проспект", "шоссе": "шоссе", "шосе": "шоссе", "пл": "площадь",
+                  "площа": "площа", "бульвар": "бульвар", "бул": "бульвар", "пров": "провулок", "автошлях": "автошлях",
+                  "узвіз": "узвіз", "пр-т": "проспект", "б-р": "бульвар", "провулок": "провулок", "бульв": "бульвар",
+                  "пер": "переулок"}
+
 PLACE_PRETEXT = ["м", "город", "місто", "село",
                  "смт", "пгт", "г", "п"]
 
-REGION_PRETEXT = ["р-н", "район", "обл", "область",
-                  "регион", "регіон", "района", "области"]
+REGION_PRETEXT = {"р-н": "район", "район": "район", "обл": "область", "область": "область",
+                  "регион": "регион", "регіон": "регіон", "района": "район", "области": "область"}
 
 HOUSE_PRETEXT = ["буд", "будинок", "д", "дом", "магазин",
                  "трц", "ринок", "ст", "отель", 'районний',
@@ -64,7 +67,7 @@ HOUSE_PRETEXT = ["буд", "будинок", "д", "дом", "магазин",
                  'метро', 'титул', 'національний', 'університет',
                  'театр', 'кіно', 'телебачення', 'склад', 'корпус', 'садок',
                  'поликлиника', 'інтернат', 'будинок', 'поліція',
-                 'лікарня', 'станція', 'клуб', 'ліцей', "площа"]
+                 'лікарня', 'станція', 'клуб', 'ліцей', "площа", "б", 'антикафе']
 
 PUNCTUATION_MARK = ["(", ")", "!", "?", "#", ":"]
 
@@ -73,9 +76,6 @@ COMMA = [","]
 DASH = ["-"]
 
 # ***************** OPTIONAL CONFIG ***************************************************
-PARENT_LABEL = 'TokenSequence'  # the XML tag for each labeled string
-GROUP_LABEL = 'Collection'  # the XML tag for a group of strings
-NULL_LABEL = 'Null'  # the null XML tag
 MODEL_FILE = 'learned_settings.crfsuite'  # filename for the crfsuite settings file
 # ************************************************************************************
 
@@ -285,7 +285,8 @@ def digits(token: str) -> str:
         return "no_digit"
 
 
-def clean(address: str, prefix: bool = False, house: bool = False, index: bool = False) -> str:
+def clean(address: str, place_pretext: bool = False, region_pretext: bool = False,
+          address_pretext: bool = False, house: bool = False, index: bool = False) -> str:
     """removes whitespace characters, pinching tricks and unnecessary tokens"""
 
     def concat_address_number(address_array):
@@ -304,10 +305,13 @@ def clean(address: str, prefix: bool = False, house: bool = False, index: bool =
         return address_array
 
     def get_unnecessary_label():
-        label_ = OTHER_LABELS if prefix else OTHER_LABELS + PRETEXT
+        label_ = OTHER_LABELS if place_pretext else OTHER_LABELS + PLACE
+        label_ = label_ if region_pretext else label_ + REGION
+        label_ = label_ if address_pretext else label_ + STREET
         label_ = label_ if index else label_ + INDEX
-        if not house:
-            label_ = label_ + HOUSE_NAME if not any(p for p in parsed if p[1] == 'HouseNumber') \
+
+        if house:
+            label_ = label_ + HOUSE_NAME if any(p for p in parsed if p[1] == 'HouseNumber') \
                 else label_ + HOUSE_NUMBER
         return label_
 
@@ -316,5 +320,13 @@ def clean(address: str, prefix: bool = False, house: bool = False, index: bool =
     parsed = parse(address)
     parsed = concat_address_number(parsed)
     non_label = get_unnecessary_label()
+    if address_pretext:
+        parsed = [(STREET_PRETEXT.get(s[0], s[0]), s[1]) if s[1] == 'StreetPretext' else s for s in parsed]
+    if region_pretext:
+        parsed = [(REGION_PRETEXT.get(s[0], s[0]), s[1]) if s[1] == 'RegionPretext' else s for s in parsed]
     address_string = " ".join([p[0] for p in parsed if p[1] not in non_label])
     return address_string
+
+
+if __name__ == '__main__':
+    print(clean('Донецк, Ленинский р-н, ул. Куйбышева 6а', address_pretext=True, region_pretext=True))
