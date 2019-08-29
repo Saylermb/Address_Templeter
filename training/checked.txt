@@ -785,4 +785,13 @@
 [['StreetPretext', 'вулиця'], ['Street', 'Іллінська'], ['Comma', ','], ['HouseNumber', '4'], ['Comma', ','], ['Place', 'Харків'], ['Comma', ','], ['Region', 'Харківська'], ['RegionPretext', 'область'], ['Comma', ','], ['PostCode', '61000']],
 [['StreetPretext', 'вулиця'], ['Street', 'Академіка'], ['Street', 'Павлова'], ['Comma', ','], ['HouseNumber', '321/20'], ['Comma', ','], ['Place', 'Харків'], ['Comma', ','], ['Region', 'Харківська'], ['RegionPretext', 'область'], ['Comma', ','], ['PostCode', '61000']],
 [['StreetPretext', 'вулиця'], ['Street', 'Академік'], ['Comma', ','], ['HouseNumber', '321/20'], ['Comma', ','], ['Place', 'Харків'], ['Comma', ','], ['Region', 'Харківська'], ['RegionPretext', 'область'], ['Comma', ','], ['PostCode', '61000']],
-[['OtherText', 'Прибутковий'], ['OtherText', 'будинок'], ['OtherText', 'побудований'], ['OtherText', 'за'], ['OtherText', 'проектом'], ['OtherText', 'Цауне']],]
+[['OtherText', 'Прибутковий'], ['OtherText', 'будинок'], ['OtherText', 'побудований'], ['OtherText', 'за'], ['OtherText', 'проектом'], ['OtherText', 'Цауне']],
+[['Place', 'Тернополь'], ['Comma', ','], ['Region', 'Тернопольская'], ['RegionPretext', 'область'], ['Comma', ','], ['Street', 'У'], ['Street', 'Самчука'], ['Comma', ','], ['HouseNumber', '6-10']],
+[['Place', 'Новоград-Волинський'], ['PlacePretext', 'мiсто'], ['Comma', ','], ['Street', 'Л'], ['Street', 'Українки'], ['HouseNumber', '35']],
+[['PostCode', '11702'], ['Comma', ','], ['Place', 'Новоград-Волинський'], ['Comma', ','], ['Region', 'Житомирська'], ['RegionPretext', 'область'], ['Comma', ','], ['StreetPretext', 'вулиця'], ['Street', 'М'], ['Street', 'Вербицького'], ['HouseNumber', '12'], ['Comma', ',']],
+[['Place', 'Київ'], ['Comma', ','], ['Street', 'П'], ['Street', 'Мирного'], ['Comma', ','], ['HouseNumber', '9']],
+[['Place', 'Київ'], ['Comma', ','], ['Street', 'Ш'], ['Street', 'Руставелі'], ['Comma', ','], ['HouseNumber', '26'], ['Comma', ','], ['PostCode', '02000']],
+[['Comma', ','], ['Place', 'Київ'], ['Comma', ','], ['Region', 'Киевская'], ['RegionPretext', 'область'], ['Comma', ','], ['StreetPretext', 'вулиця'], ['Street', 'С'], ['Street', 'Гусовського'], ['Comma', ','], ['HouseNumber', '1']],
+[['Region', 'Дніпропетровська'], ['RegionPretext', 'область'], ['Comma', ','], ['Place', 'Кривий'], ['Place', 'Ріг'], ['Comma', ','], ['Street', 'В'], ['Street', 'Матусевича'], ['Comma', ','], ['HouseNumber', '29']],
+[['Place', 'Кривий'], ['Place', 'Ріг'], ['Comma', ','], ['Region', 'Дніпропетровська'], ['Comma', ','], ['StreetPretext', 'вулиця'], ['Street', 'С'], ['Street', 'Тільги'], ['Comma', ','], ['HouseNumber', '39']],
+]

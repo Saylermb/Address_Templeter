@@ -7,7 +7,7 @@ except ImportError:
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 setup(
-    version='1.20',
+    version='1.21',
     url='https://github.com/Saylermb/Address_Templeter',
     description='search for addresses in the text',
     name='address_templeter',

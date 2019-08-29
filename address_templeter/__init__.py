@@ -25,7 +25,7 @@ INDEX = ["PostCode",  # 04122
          ]
 
 PLACE = ["PlacePretext",  # г.
-                 ]
+         ]
 REGION = [
     "RegionPretext",  # Область
 ]
@@ -199,7 +199,8 @@ def tokenFeatures(token):
         'ends_with_sign': (token[-1]
                            if bool(re.match('.+[^.\w]', token, flags=re.UNICODE))
                            else False),
-        'with_dash': dash_id(token)
+        'with_dash': dash_id(token),
+        'adjective': adjective(token)
     }
 
     return features
@@ -261,6 +262,15 @@ def in_pre(token):
         return "Dash"
     else:
         return "Other"
+
+
+def adjective(token):
+    if len(token) > 2 and token[-2:] in ['ая', 'го', 'ей', 'ем', 'ий', 'им',
+                                         'их', 'ой', 'ую', 'ые', 'ый', 'ых',
+                                         'ье', 'ья', 'ым', 'но']:
+        return True
+    else:
+        return False
 
 
 def digits(token: str) -> str:
@@ -326,7 +336,3 @@ def clean(address: str, place_pretext: bool = False, region_pretext: bool = Fals
         parsed = [(REGION_PRETEXT.get(s[0], s[0]), s[1]) if s[1] == 'RegionPretext' else s for s in parsed]
     address_string = " ".join([p[0] for p in parsed if p[1] not in non_label])
     return address_string
-
-
-if __name__ == '__main__':
-    print(clean('Донецк, Ленинский р-н, ул. Куйбышева 6а', address_pretext=True, region_pretext=True))
