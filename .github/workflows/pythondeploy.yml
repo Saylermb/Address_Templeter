@@ -19,6 +19,7 @@ jobs:
         pip install .
 
     - name: Test deploy
+      uses: Saylermb/Address_Templeter@master
       env: |
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         FOLDER: /
