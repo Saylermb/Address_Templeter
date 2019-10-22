@@ -54,11 +54,6 @@ class CleanFuncTest(unittest.TestCase):
                          'Донецк Садовая 26а'
                          )
 
-    def test_less_text(self):
-        self.assertEqual(clean("Ясниноватский район, возле белого магазина, улица Садовая, 26а", house=True),
-                         'Ясниноватский Садовая 26а'
-                         )
-
     def test_within_space(self):
         self.assertEqual(clean("Ювилейная ул. 21 / 22", house=True, index=True),
                          'Ювилейная 21/22'
