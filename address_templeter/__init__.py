@@ -354,7 +354,7 @@ def tokenFeatures(token):
                            else False),
         'with_dash': dash_id(token),
         'adjective': adjective(token),
-        'in_popular_cyty': token in CITY_LIST,
+        'in_popular_city': token.title() in CITY_LIST,
     }
 
     return features

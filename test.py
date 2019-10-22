@@ -84,18 +84,18 @@ class CleanFuncTest(unittest.TestCase):
 class ParseFuncTest(unittest.TestCase):
 
     def test_parse_1(self):
-        self.assertEqual(parse("город Калиниград, 50-лет ссср ул. 8а"),
+        self.assertListEqual(parse("город Калиниград, 50-лет ссср ул. 8а"),
                          [('город', 'PlacePretext'),
                           ('Калиниград', 'Place'),
                           (',', 'Comma'),
-                          ('50-лет', 'StreetPretext'),
+                          ('50-лет', 'Street'),
                           ('ссср', 'Street'),
                           ('ул', 'StreetPretext'),
                           ('8а', 'HouseNumber')]
                          )
 
     def test_parse_2(self):
-        self.assertEqual(parse("г. Судак Солнечная 9 а"),
+        self.assertListEqual(parse("г. Судак Солнечная 9 а"),
                          [('г', 'PlacePretext'),
                           ('Судак', 'Place'),
                           ('Солнечная', 'Street'),
