@@ -1,24 +1,26 @@
 import re
+from random import randint, shuffle
+
 import overpy
-from random import randint
+
 from address_templeter import STREET_PRETEXT, PUNCTUATION_MARK, \
     HOUSE_PRETEXT, PLACE_PRETEXT, REGION_PRETEXT, COMMA
 
 api = overpy.Overpass()
 
-geo_polygon = "(50.482287,30.509273,50.539674,30.520974)"
+geo_polygon = "(50.492287,30.509273,50.530674,30.520974)"
 response = api.query(f"""way["addr:street"]["addr:housenumber"]{geo_polygon};
     (._;>;);
     out body;""")
 
-iter_address = [way.tags for way in response.ways]
+address_list = [way.tags for way in response.ways]
 
-geo_polygon = "(48.460824,35.005537,48.480824, 35.055107)"
+geo_polygon = "(48.460824,35.005537,48.480024, 35.055107)"
 response = api.query(f"""way["addr:street"]["addr:housenumber"]{geo_polygon};
     (._;>;);
     out body;""")
 
-iter_address+= [way.tags for way in response.ways]
+address_list += [way.tags for way in response.ways]
 
 REGION_PRETEXT = list(REGION_PRETEXT.keys())
 STREET_PRETEXT = list(STREET_PRETEXT.keys())
@@ -145,7 +147,7 @@ func_dict = {'addr:housenumber': addr_housenumber,
              'name': addr_name, }
 
 
-def pars_address(address):  # add random address name
+def pars_address(address, ):  # add random address name
     row = get_row()
     address = {'addr:street': address.get('addr:street'),
                'addr:housenumber': address.get('addr:housenumber'),
@@ -163,8 +165,12 @@ def pars_address(address):  # add random address name
 
 
 def address_generator():
-    for addr in iter_address:
+    shuffle(address_list)
+    for addr in address_list[:-50]:
         yield pars_address(addr)
+    for addr in address_list[-50:]:
+        addr = pars_address(addr)
+        yield [(context, value.lower()) for context, value in addr]
 
 
 if __name__ == '__main__':

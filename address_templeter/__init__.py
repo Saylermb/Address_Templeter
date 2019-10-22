@@ -4,12 +4,12 @@
 import pycrfsuite
 import os
 import re
-import warnings
 from collections import OrderedDict
 
 from .house import HOUSE_PRETEXT
 from .context import *
 from .city import CITY_LIST
+
 #  _____________________
 # |1. LABELS! |
 # |_____________________|
@@ -48,7 +48,6 @@ LABELS = ['Place',  # Киев
           ]  # The labels should be a list of strings
 
 LABELS = LABELS + OTHER_LABELS + PLACE + REGION + STREET + HOUSE_NAME + INDEX + HOUSE_NUMBER
-
 
 PUNCTUATION_MARK = ['(', ')', '!', '?', '#', ':']
 
@@ -126,12 +125,12 @@ def tokens2features(tokens):
     # this should call tokenFeatures to get features for individual tokens,
     # as well as define any features that are dependent upon tokens before/after
 
-    feature_sequence = [tokenFeatures(tokens[0])]
+    feature_sequence = [tokenFeatures(tokens[0], 0)]
     previous_features = feature_sequence[-1].copy()
 
-    for token in tokens[1:]:
+    for index, token in enumerate(tokens[1:]):
         # set features for individual tokens (calling tokenFeatures)
-        token_features = tokenFeatures(token)
+        token_features = tokenFeatures(token, index + 1)
         current_features = token_features.copy()
 
         # features for the features of adjacent tokens
@@ -158,7 +157,7 @@ def tokens2features(tokens):
     return feature_sequence
 
 
-def tokenFeatures(token):
+def tokenFeatures(token, index):
     # this defines a dict of features for an individual token
     features = {
         'length': len(token),
@@ -174,6 +173,7 @@ def tokenFeatures(token):
         'with_dash': dash_id(token),
         'adjective': adjective(token),
         'in_popular_city': token.title() in CITY_LIST,
+        'index': index
     }
 
     return features

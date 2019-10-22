@@ -80,28 +80,39 @@ class CleanFuncTest(unittest.TestCase):
                              'г Киев'
                              )
 
+    def test_lower_case1(self):
+        self.assertLessEqual(clean("николаев, улица чкалова 110а", house=True, index=True),
+                             'николаев чкалова 110а'
+                             )
+
+    def test_lower_case2(self):
+        self.assertLessEqual(clean("киев проспект петра григоренко 51", house=True, index=True, place_pretext=True),
+                             'киев проспект петра григоренко 51'
+                             )
+
 
 class ParseFuncTest(unittest.TestCase):
 
     def test_parse_1(self):
         self.assertListEqual(parse("город Калиниград, 50-лет ссср ул. 8а"),
-                         [('город', 'PlacePretext'),
-                          ('Калиниград', 'Place'),
-                          (',', 'Comma'),
-                          ('50-лет', 'Street'),
-                          ('ссср', 'Street'),
-                          ('ул', 'StreetPretext'),
-                          ('8а', 'HouseNumber')]
-                         )
+                             [('город', 'PlacePretext'),
+                              ('Калиниград', 'Place'),
+                              (',', 'Comma'),
+                              ('50-лет', 'Street'),
+                              ('ссср', 'Street'),
+                              ('ул', 'StreetPretext'),
+                              ('8а', 'HouseNumber')]
+                             )
 
     def test_parse_2(self):
         self.assertListEqual(parse("г. Судак Солнечная 9 а"),
-                         [('г', 'PlacePretext'),
-                          ('Судак', 'Place'),
-                          ('Солнечная', 'Street'),
-                          ('9', 'HouseNumber'),
-                          ('а', 'HouseNumber')]
-                         )
+                             [('г', 'PlacePretext'),
+                              ('Судак', 'Place'),
+                              ('Солнечная', 'Street'),
+                              ('9', 'HouseNumber'),
+                              ('а', 'HouseNumber')]
+                             )
+
     @staticmethod
     def test_parse_3():
         parse("1,2,3,4,5,6,7")
