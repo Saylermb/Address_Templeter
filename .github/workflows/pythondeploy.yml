@@ -23,8 +23,8 @@ jobs:
         python -m pip install .
         cd ..
         ls -la
-    - name: clone git_sftp_update
-    - uses: actions/checkout@v1
+    - name: Deploy
+      uses: actions/checkout@v1
       with:
         repository: Saylermb/git_sftp_update 
     - run: |
