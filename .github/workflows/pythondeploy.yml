@@ -24,10 +24,9 @@ jobs:
         cd ..
         ls -la
     - name: clone git_sftp_update
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v1
       with:
-        repository: Saylermb/git_sftp_update
-    - name: Deploy 
+        repository: Saylermb/git_sftp_update 
     - run: |
         ls -la
         python3 deploy.py ${{secrets.HOST}} ${{secrets.USER}} ${{secrets.PASSWORD}} ${{secrets.PORT}} ../Address_Templeter/ /root/Address_Templeter
