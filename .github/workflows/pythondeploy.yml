@@ -18,11 +18,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        ls -la
         python -m pip install .
-        cd ..
-        ls -la
     - name: Build and Deploy 
       uses: Saylermb/git_sftp_update@master
       if: github.event.prerelease == false
@@ -32,5 +28,5 @@ jobs:
         PASSWORD: ${{ secrets.PASSWORD }}
         PORT: ${{ secrets.PORT }}
         REPO_DIR: /github/workspace
-        DIR_ON_SERVER: root/Address_Templeter/
+        DIR_ON_SERVER: /root/Address_Templeter/
 
