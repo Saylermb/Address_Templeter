@@ -21,15 +21,16 @@ jobs:
         python -m pip install --upgrade pip
         ls -la
         python -m pip install .
+        cd ..
         ls -la
-    - uses: actions/checkout@v1
-      with:
-        repository: Saylermb/git_sftp_update 
-        run: |
-          ls -la
-          ls -al ..
-          python3 deploy.py ${{secrets.HOST}} ${{secrets.USER}} ${{secrets.PASSWORD}} ${{secrets.PORT}} ../Address_Templeter/ /root/Address_Templeter
-
-
-
+    - name: Build and Deploy 
+      uses: Saylermb/git_sftp_update@master
+      if: github.event.prerelease == false
+      env:
+        HOST: ${{ secrets.ACCESS_TOKEN }}
+        USER: ${{ secrets.USER }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        PORT: ${{ secrets.PORT }}
+        REPO_DIR: Address_Templeter
+        DIR_ON_SERVER: /root/Address_Templeter
 
