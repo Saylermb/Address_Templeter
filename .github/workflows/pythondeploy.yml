@@ -27,7 +27,7 @@ jobs:
       uses: Saylermb/git_sftp_update@master
       if: github.event.prerelease == false
       env:
-        HOST: ${{ secrets.ACCESS_TOKEN }}
+        HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
         PASSWORD: ${{ secrets.PASSWORD }}
         PORT: ${{ secrets.PORT }}
