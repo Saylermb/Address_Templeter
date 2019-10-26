@@ -23,14 +23,19 @@ jobs:
         python -m pip install .
         cd ..
         ls -la
-    - name: Deploy
-      uses: actions/checkout@v1
-      with:
-        repository: Saylermb/git_sftp_update 
-        run: |
-          ls -la
-          python3 deploy.py ${{secrets.HOST}} ${{secrets.USER}} ${{secrets.PASSWORD}} ${{secrets.PORT}} ../Address_Templeter/ /root/Address_Templeter
+        
+  deploy:
+     needs: build  
+     runs-on: ubuntu-latest
+     steps:     
+        - uses: actions/checkout@v1
+          with:
+            repository: Saylermb/git_sftp_update 
+            run: |
+              ls -la
+              ls -al ..
+              python3 deploy.py ${{secrets.HOST}} ${{secrets.USER}} ${{secrets.PASSWORD}} ${{secrets.PORT}} ../Address_Templeter/ /root/Address_Templeter
 
 
-        
-        
+
+
