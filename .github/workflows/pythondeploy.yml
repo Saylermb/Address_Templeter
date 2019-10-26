@@ -23,13 +23,13 @@ jobs:
         python -m pip install .
         cd ..
         ls -la
-    - name: git_sftp_updaten 
-      uses: Saylermb/git_sftp_updaten@master
-      with:
-        python-version: 3.7
     - name: Deploy
       run: |
+        git clone https://github.com/Saylermb/git_sftp_update.git
         ls -la
+        cd git_sftp_update
+        ls -la
+        python3 deploy.py ${{secrets.HOST}} ${{secrets.USER}} ${{secrets.PASSWORD}} ${{secrets.PORT}} ../Address_Templeter/ /root/Address_Templeter
         
         
         
