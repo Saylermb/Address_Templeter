@@ -31,6 +31,6 @@ jobs:
         USER: ${{ secrets.USER }}
         PASSWORD: ${{ secrets.PASSWORD }}
         PORT: ${{ secrets.PORT }}
-        REPO_DIR: Address_Templeter
-        DIR_ON_SERVER: /github/workspace
+        REPO_DIR: /github/workspace
+        DIR_ON_SERVER: root/Address_Templeter/
 
