@@ -23,12 +23,10 @@ jobs:
         python -m pip install .
         cd ..
         ls -la
-    - name: Deploy
-      run: |
-        apt install -y git
-        git clone https://github.com/Saylermb/git_sftp_update.git
-        ls -la
-        cd git_sftp_update
+    - uses: actions/checkout@v1
+      with:
+        repository: Saylermb/git_sftp_update
+    - run: |
         ls -la
         python3 deploy.py ${{secrets.HOST}} ${{secrets.USER}} ${{secrets.PASSWORD}} ${{secrets.PORT}} ../Address_Templeter/ /root/Address_Templeter
         
