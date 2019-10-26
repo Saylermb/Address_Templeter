@@ -21,7 +21,6 @@ jobs:
         python -m pip install --upgrade pip
         ls -la
         python -m pip install .
-        cd ..
         ls -la
         
   deploy:
