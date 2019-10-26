@@ -21,7 +21,7 @@ jobs:
         python -m pip install .
       
     - name: Build and Deploy 
-      uses: Saylermb/git_sftp_update@master
+      uses: Saylermb/github-sftp-deploy-action@master
       if: github.event.prerelease == false
       env:
         HOST: ${{ secrets.HOST }}
