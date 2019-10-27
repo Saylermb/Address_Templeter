@@ -29,5 +29,6 @@ jobs:
         PASSWORD: ${{ secrets.PASSWORD }}
         PORT: ${{ secrets.PORT }}
         DIR_ON_SERVER: /root/Address_Templeter/
-        MODE: FULL
+        MODE: GIT
+        USE_COMMAND_AFTER_UPDATE: ls -al
 
