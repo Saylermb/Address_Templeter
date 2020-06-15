@@ -126,7 +126,7 @@ class ParseFuncTest(unittest.TestCase):
                              )
 
     @staticmethod
-    def test_parse_3():
+    def test_parse_4():
         parse("1,2,3,4,5,6,7")
 
 
