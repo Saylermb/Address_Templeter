@@ -23,6 +23,11 @@ class CleanFuncTest(unittest.TestCase):
                          'Калиниград Садово-Красная 184-Б',
                          )
 
+    def test_address_3(self):
+        self.assertEqual(clean("Київ, вул.Володимира Покотила, дом 346", house=True, index=True),
+                         'Київ Володимира Покотила 346',
+                         )
+
     def test_without_other(self):
         self.assertEqual(
             clean('м. Київ, вул. В. Гетьмана, 10/37 (на розі вул. В. Гетьмана та вул. Виборзької - на другому поверсі',
@@ -108,13 +113,21 @@ class ParseFuncTest(unittest.TestCase):
                               ('а', 'HouseNumber')]
                              )
 
+    def test_parse_3(self):
+        self.assertListEqual(parse("Київ, вул.Авіаконструктора Антонова, дом 188"),
+                             [('Київ', 'Place'),
+                              (',', 'Comma'),
+                              ('вул', 'StreetPretext'),
+                              ('Авіаконструктора', 'Street'),
+                              ('Антонова', 'Street'),
+                              (',', 'Comma'),
+                              ('дом', 'HousePretext'),
+                              ('188', 'HouseNumber')]
+                             )
+
     @staticmethod
     def test_parse_3():
         parse("1,2,3,4,5,6,7")
-
-    def test_without_address(self):
-        parsed = [word for word in parse("Ясень, ясень, как так ясень?!") if word[1] not in ['OtherText', 'Comma']]
-        self.assertLessEqual(len(parsed), 1)
 
 
 if __name__ == '__main__':
